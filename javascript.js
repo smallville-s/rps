@@ -1,3 +1,17 @@
+let playerScore = 0;
+let computerScore = 0;
+
+const buttons = document.querySelectorAll('button');
+    buttons.forEach(button => {
+        button.addEventListener('click', () => {
+            game(button.id);
+        });
+    });
+
+let playerResult = 0;
+let computerResult = 0;
+let result = document.getElementById("result");
+
 function computerPlay() {
     switch (Math.floor(Math.random()*3)+1) {
         case 1: return "Rock";
@@ -5,9 +19,6 @@ function computerPlay() {
         case 3: return "Scissors"
     }
 }
-
-let playerScore = 0;
-let computerScore = 0;
 
 function playRound(playerSelection, computerSelection) {
     playerScore = 0;
@@ -43,24 +54,34 @@ function playRound(playerSelection, computerSelection) {
         }
     }
 }
-
-function game() {
-    let playerResult = 0;
-    let computerResult = 0;
-    for (let i = 0; i < 5; i++) {
-        const playerSelection = prompt("Rock, Paper, Scissors: ");
-        const computerSelection = computerPlay();
-        console.log(playRound(playerSelection, computerSelection));
-        playerResult+=playerScore;
-        computerResult+=computerScore;
-    } 
-    if (playerResult > computerResult) {
-        return "You Win!";
-    } else if (playerResult == computerResult) {
-        return "No winner.";
-    } else {
-        return "You Lose!";
-    }
-  
+     
+function game(playerSelection) {
+    const computerSelection = computerPlay();
+    document.getElementById("game").textContent = playRound(playerSelection, computerSelection);
+    
+    playerResult+=playerScore;
+    computerResult+=computerScore;
+    
+    document.getElementById("playerScore").textContent = playerResult;
+    document.getElementById("computerScore").textContent = computerResult;
+         
+    if (playerResult >= 5 || computerResult >= 5) {
+        if (playerResult > computerResult) {
+            result.textContent = "You Win!";
+            result.setAttribute("style", "color: green");
+        } else if (playerResult == computerResult) {
+            result.textContent = "No winner.";
+        } else {
+            result.textContent = "You Lose!";
+            result.setAttribute("style", "color: red");
+        }
+        playerResult = 0;
+        computerResult = 0;
+        buttons.forEach(button => button.disabled = true);
+        
+        let restartGame = document.createElement('button');
+        restartGame.textContent = "Start new game!";
+        document.getElementById("restartGame").appendChild(restartGame);
+        restartGame.setAttribute("onClick", "window.location.reload()");
+    }  
 }
-console.log(game());

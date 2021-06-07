@@ -1,0 +1,16 @@
+div {
+    margin: auto;
+    padding: auto;
+    width: 50%;
+    text-align: center;
+}
+
+.score {
+    display: grid;
+    grid-template-columns: auto 10px;
+    column-gap: 25px;
+    justify-content: center;    
+}
+.score > p {
+    
+}
