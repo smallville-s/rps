@@ -1,23 +1,44 @@
 let playerScore = 0;
 let computerScore = 0;
 
+let playerResult = 0;
+let computerResult = 0;
+
+let result = document.getElementById("result");
+let gameResult = document.getElementById("game");
+let player = document.getElementById("player");
+let computer = document.getElementById("computer");
+
 const buttons = document.querySelectorAll('button');
     buttons.forEach(button => {
         button.addEventListener('click', () => {
+            player.className = `fas fa-hand-${button.id}`;
             game(button.id);
+            transition(player);
         });
     });
 
-let playerResult = 0;
-let computerResult = 0;
-let result = document.getElementById("result");
-
 function computerPlay() {
+    let choice = "";
     switch (Math.floor(Math.random()*3)+1) {
-        case 1: return "Rock";
-        case 2: return "Paper";
-        case 3: return "Scissors"
+        case 1: {
+            computer.className = "fas fa-hand-rock";   
+            choice = "Rock";
+            break;
+        }
+        case 2: {
+            computer.className = "fas fa-hand-paper";
+            choice = "Paper";
+            break;
+        }
+        case 3: {
+            computer.className = "fas fa-hand-scissors";
+            choice = "Scissors";
+            break;
+        }
     }
+    transition(computer); 
+    return choice;
 }
 
 function playRound(playerSelection, computerSelection) {
@@ -54,18 +75,25 @@ function playRound(playerSelection, computerSelection) {
         }
     }
 }
-     
+
+function transition (user) {
+    user.classList.add("selection");
+    user.addEventListener('transitionend', () => {
+        user.classList.remove('selection');
+    });
+}
+
 function game(playerSelection) {
     const computerSelection = computerPlay();
     document.getElementById("game").textContent = playRound(playerSelection, computerSelection);
-    
+    transition(gameResult);
     playerResult+=playerScore;
     computerResult+=computerScore;
     
     document.getElementById("playerScore").textContent = playerResult;
     document.getElementById("computerScore").textContent = computerResult;
          
-    if (playerResult >= 5 || computerResult >= 5) {
+    if (playerResult >= 3 || computerResult >= 3) {
         if (playerResult > computerResult) {
             result.textContent = "You Win!";
             result.setAttribute("style", "color: green");

@@ -4,13 +4,36 @@ div {
     width: 50%;
     text-align: center;
 }
-
+#container {
+    margin: 50px auto;
+}
+.game-result {
+    height: 1em;
+    margin: 50px auto;
+}
+.game-result > p {
+    transition: 0.5s;
+}
 .score {
     display: grid;
     grid-template-columns: auto 10px;
     column-gap: 25px;
     justify-content: center;    
 }
-.score > p {
-    
+#result {
+    font-weight: 600;
+}
+#player {
+    color: gray;
+}
+#computer {
+    color: darkgray;
+}
+i {
+    padding: 50px;
+    font-size: 180px;
+    transition: all 0.5s ease;
+}
+.selection {
+    transform: scale(1.2);
 }
